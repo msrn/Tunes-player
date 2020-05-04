@@ -15,9 +15,9 @@ SettingsDialog::SettingsDialog(QWidget *parent) : QDialog(parent) {
     this->setFixedSize(400,400);
 
     //handle buttonbox clicks
-    connect(buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
-    connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
-    connect(addFolder, SIGNAL(clicked()), this, SLOT(onAddClick()));
+    connect(m_buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
+    connect(m_buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
+    connect(m_addFolder, SIGNAL(clicked()), this, SLOT(onAddClick()));
 
 
 }
@@ -28,19 +28,19 @@ void SettingsDialog::createLayout() {
     QLabel *titleLabel = new QLabel("Settings");
     titleLabel->setStyleSheet("font-size: 30px;");
 
-    fileSettingsGroup = new QGroupBox("Libary");
-    fileSettingsGroup->setStyleSheet("QGroupBox { font-size: 20px;}");
+    m_fileSettingsGroup = new QGroupBox("Libary");
+    m_fileSettingsGroup->setStyleSheet("QGroupBox { font-size: 20px;}");
     QVBoxLayout *fileGroupLayout = new QVBoxLayout(this);
     QLabel *fileLabel = new QLabel("Monitored folders");
-    addFolder = new QPushButton("Add");
-    addFolder->setMaximumSize(50,50);
+    m_addFolder = new QPushButton("Add");
+    m_addFolder->setMaximumSize(50,50);
     fileGroupLayout->addWidget(fileLabel);
-    fileGroupLayout->addWidget(addFolder);
-    fileSettingsGroup->setLayout(fileGroupLayout);
+    fileGroupLayout->addWidget(m_addFolder);
+    m_fileSettingsGroup->setLayout(fileGroupLayout);
 
 
-    audioSettingsGroup = new QGroupBox("Audio");
-    audioSettingsGroup->setStyleSheet("QGroupBox {font-size: 20px; }");
+    m_audioSettingsGroup = new QGroupBox("Audio");
+    m_audioSettingsGroup->setStyleSheet("QGroupBox {font-size: 20px; }");
     QVBoxLayout *audioGroupLayout = new QVBoxLayout();
     QLabel *deviceLabel = new QLabel("Playback device");
     deviceLabel->setWhatsThis("Set applications default output device for music playing");
@@ -49,17 +49,17 @@ void SettingsDialog::createLayout() {
     deviceDropDown->addItem("Default system output device");
     audioGroupLayout->addWidget(deviceLabel);
     audioGroupLayout->addWidget(deviceDropDown);
-    audioSettingsGroup->setLayout(audioGroupLayout);
+    m_audioSettingsGroup->setLayout(audioGroupLayout);
 
-    buttonBox = new QDialogButtonBox(QDialogButtonBox::Save | QDialogButtonBox::Cancel);
+    m_buttonBox = new QDialogButtonBox(QDialogButtonBox::Save | QDialogButtonBox::Cancel);
 
 
 
     mainLayout->addWidget(titleLabel);
-    mainLayout->addWidget(fileSettingsGroup);
-    mainLayout->addWidget(audioSettingsGroup);
+    mainLayout->addWidget(m_fileSettingsGroup);
+    mainLayout->addWidget(m_audioSettingsGroup);
     mainLayout->addSpacing(200);
-    mainLayout->addWidget(buttonBox);
+    mainLayout->addWidget(m_buttonBox);
     mainLayout->setAlignment(Qt::AlignTop);
 
     this->setLayout(mainLayout);

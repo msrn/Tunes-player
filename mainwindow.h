@@ -16,20 +16,20 @@ class MainWindow : public QMainWindow {
     Q_OBJECT
 
 private:
-    QAction *homeAction;
-    QAction *artistsAction;
-    QAction *albumsAction;
-    QAction *genresAction;
-    QAction *helpAction;
-    QAction *settingsAction;
-    PlayerDock *playerDock;
-    QWidget *homeWidget;
-    QWidget *artistsWidget;
-    QWidget *albumsWidget;
-    QWidget *genresWidget;
-    QStackedWidget *viewStack;
-    SettingsDialog *settingsDialog;
-    HelpDialog *helpDialog;
+    QAction *m_homeAction;
+    QAction *m_artistsAction;
+    QAction *m_albumsAction;
+    QAction *m_genresAction;
+    QAction *m_helpAction;
+    QAction *m_settingsAction;
+    PlayerDock *m_playerDock;
+    QWidget *m_homeWidget;
+    QWidget *m_artistsWidget;
+    QWidget *m_albumsWidget;
+    QWidget *m_genresWidget;
+    QStackedWidget *m_viewStack;
+    SettingsDialog *m_settingsDialog;
+    HelpDialog *m_helpDialog;
 
 public:
     MainWindow(QWidget *parent = nullptr);

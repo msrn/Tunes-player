@@ -15,8 +15,8 @@ MainWindow::MainWindow(QWidget *parent)
     this->setWindowTitle("Tunes");
     this->resize(1280, 768); //initial window size
     this->setMinimumSize(1280, 768);
-    settingsDialog = new SettingsDialog(this);
-    helpDialog = new HelpDialog(this);
+    m_settingsDialog = new SettingsDialog(this);
+    m_helpDialog = new HelpDialog(this);
 
     createActions();
     createToolbar();
@@ -30,26 +30,26 @@ MainWindow::MainWindow(QWidget *parent)
     /*
      * ViewStack handles view changing
      */
-    viewStack = new QStackedWidget();
+    m_viewStack = new QStackedWidget();
 
-    viewStack->addWidget(homeWidget);
-    viewStack->addWidget(artistsWidget);
-    viewStack->addWidget(albumsWidget);
-    viewStack->addWidget(genresWidget);
+    m_viewStack->addWidget(m_homeWidget);
+    m_viewStack->addWidget(m_artistsWidget);
+    m_viewStack->addWidget(m_albumsWidget);
+    m_viewStack->addWidget(m_genresWidget);
 
 
-    this->setCentralWidget(viewStack);
+    this->setCentralWidget(m_viewStack);
 
 
     //Handles Toolbar Buttons and view change
-    connect(homeAction, SIGNAL(triggered()), this, SLOT(onHomeActionClick()));
-    connect(artistsAction, SIGNAL(triggered()), this, SLOT(onArtistsActionClick()));
-    connect(albumsAction, SIGNAL(triggered()), this, SLOT(onAlbumsActionClick()));
-    connect(genresAction, SIGNAL(triggered()), this, SLOT(onGenresActionClick()));
+    connect(m_homeAction, SIGNAL(triggered()), this, SLOT(onHomeActionClick()));
+    connect(m_artistsAction, SIGNAL(triggered()), this, SLOT(onArtistsActionClick()));
+    connect(m_albumsAction, SIGNAL(triggered()), this, SLOT(onAlbumsActionClick()));
+    connect(m_genresAction, SIGNAL(triggered()), this, SLOT(onGenresActionClick()));
 
 
-    connect(settingsAction, SIGNAL(triggered()), settingsDialog, SLOT(exec()));
-    connect(helpAction, SIGNAL(triggered()), helpDialog, SLOT(exec()));
+    connect(m_settingsAction, SIGNAL(triggered()), m_settingsDialog, SLOT(exec()));
+    connect(m_helpAction, SIGNAL(triggered()), m_helpDialog, SLOT(exec()));
 
 
 
@@ -77,13 +77,13 @@ void MainWindow::createToolbar() {
     toolbar->setMovable(true);
 
     toolbar->addWidget(spacerLeft);
-    toolbar->addAction(homeAction);
-    toolbar->addAction(artistsAction);
-    toolbar->addAction(albumsAction);
-    toolbar->addAction(genresAction);
+    toolbar->addAction(m_homeAction);
+    toolbar->addAction(m_artistsAction);
+    toolbar->addAction(m_albumsAction);
+    toolbar->addAction(m_genresAction);
     toolbar->addWidget(spacerRight);
-    toolbar->addAction(helpAction);
-    toolbar->addAction(settingsAction);
+    toolbar->addAction(m_helpAction);
+    toolbar->addAction(m_settingsAction);
 
 
 
@@ -91,35 +91,35 @@ void MainWindow::createToolbar() {
 
 void MainWindow::createActions() {
 
-    homeAction = new QAction("Home", this);
-    homeAction->setIcon(QPixmap(":/res/home.svg"));
+    m_homeAction = new QAction("Home", this);
+    m_homeAction->setIcon(QPixmap(":/res/home.svg"));
 
-    artistsAction = new QAction("Artists", this);
-    artistsAction->setIcon(QPixmap(":/res/artist.svg"));
+    m_artistsAction = new QAction("Artists", this);
+    m_artistsAction->setIcon(QPixmap(":/res/artist.svg"));
 
-    albumsAction = new QAction("Albums", this);
-    albumsAction->setIcon(QPixmap(":/res/album.svg"));
+    m_albumsAction = new QAction("Albums", this);
+    m_albumsAction->setIcon(QPixmap(":/res/album.svg"));
 
-    genresAction = new QAction("Genres", this);
-    genresAction->setIcon(QPixmap(":/res/genre.svg"));
+    m_genresAction = new QAction("Genres", this);
+    m_genresAction->setIcon(QPixmap(":/res/genre.svg"));
 
-    helpAction = new QAction("Help", this);
-    helpAction->setIcon(QPixmap(":/res/help.svg"));
+    m_helpAction = new QAction("Help", this);
+    m_helpAction->setIcon(QPixmap(":/res/help.svg"));
 
-    settingsAction = new QAction("Settings", this);
-    settingsAction->setIcon(QPixmap(":/res/settings.svg"));
+    m_settingsAction = new QAction("Settings", this);
+    m_settingsAction->setIcon(QPixmap(":/res/settings.svg"));
 }
 
 void MainWindow::createPlayerDock() {
-    playerDock = new PlayerDock(this);
-    this->addDockWidget(Qt::LeftDockWidgetArea, playerDock, Qt::Vertical); //Add dock to MainWindow
+    m_playerDock = new PlayerDock(this);
+    this->addDockWidget(Qt::LeftDockWidgetArea, m_playerDock, Qt::Vertical); //Add dock to MainWindow
 }
 
 void MainWindow::createHomeLayout() {
 
-    homeWidget = new QWidget();
+    m_homeWidget = new QWidget();
 
-    QVBoxLayout *mainLayout = new QVBoxLayout(homeWidget);
+    QVBoxLayout *mainLayout = new QVBoxLayout(m_homeWidget);
     mainLayout->setAlignment(Qt::AlignTop);
     mainLayout->setContentsMargins(0,0,0,0);
     mainLayout->setSpacing(0);
@@ -128,11 +128,11 @@ void MainWindow::createHomeLayout() {
      * ViewBar setup
      */
 
-    QWidget *viewBar = new QWidget(homeWidget);
+    QWidget *viewBar = new QWidget(m_homeWidget);
     viewBar->setStyleSheet(".QWidget { background-color: #B4B4B4 }");
     viewBar->setContentsMargins(0,0,0,0);
 
-    QVBoxLayout *viewBarLayout = new QVBoxLayout(homeWidget);
+    QVBoxLayout *viewBarLayout = new QVBoxLayout(m_homeWidget);
     viewBarLayout->setAlignment(Qt::AlignTop);
     viewBar->setMaximumHeight(100);
     //viewBarLayout->setMargin(0);
@@ -140,10 +140,10 @@ void MainWindow::createHomeLayout() {
 
 
 
-    QPushButton *customizeButton = new QPushButton("Customize", homeWidget);
-    QMenu *customizeMenu = new QMenu(homeWidget);
-    QAction *newAdditions = new QAction("Newest Additions", homeWidget);
-    QAction *nowPlaying = new QAction("Now Playing", homeWidget);
+    QPushButton *customizeButton = new QPushButton("Customize", m_homeWidget);
+    QMenu *customizeMenu = new QMenu(m_homeWidget);
+    QAction *newAdditions = new QAction("Newest Additions", m_homeWidget);
+    QAction *nowPlaying = new QAction("Now Playing", m_homeWidget);
 
     customizeButton->setMaximumWidth(100);
     customizeButton->setMinimumSize(100, 20);
@@ -168,7 +168,7 @@ void MainWindow::createHomeLayout() {
      * Content setup
      */
 
-    QLabel *newAddHeader = new QLabel("New Additions", homeWidget);
+    QLabel *newAddHeader = new QLabel("New Additions", m_homeWidget);
     QFont *font = new QFont("Arial", 15, QFont::Bold);
     newAddHeader->setStyleSheet("font-size: 40px;");
     newAddHeader->setContentsMargins(20,10,20,10);
@@ -177,19 +177,19 @@ void MainWindow::createHomeLayout() {
      * Grid setup
      */
 
-    QWidget *gridWidget = new QWidget(homeWidget);
+    QWidget *gridWidget = new QWidget(m_homeWidget);
     QGridLayout *homeGrid = new QGridLayout();
 
     /*
      * Album
      */
 
-    AlbumModel *albumWidget = new AlbumModel(homeWidget);
-    AlbumModel *albumWidget2 = new AlbumModel(homeWidget);
-    AlbumModel *albumWidget3 = new AlbumModel(homeWidget);
-    AlbumModel *albumWidget4 = new AlbumModel(homeWidget);
-    AlbumModel *albumWidget5 = new AlbumModel(homeWidget);
-    AlbumModel *albumWidget6 = new AlbumModel(homeWidget);
+    AlbumModel *albumWidget = new AlbumModel(m_homeWidget);
+    AlbumModel *albumWidget2 = new AlbumModel(m_homeWidget);
+    AlbumModel *albumWidget3 = new AlbumModel(m_homeWidget);
+    AlbumModel *albumWidget4 = new AlbumModel(m_homeWidget);
+    AlbumModel *albumWidget5 = new AlbumModel(m_homeWidget);
+    AlbumModel *albumWidget6 = new AlbumModel(m_homeWidget);
 
     homeGrid->addWidget(albumWidget,0,0);
     homeGrid->addWidget(albumWidget2,0,1);
@@ -213,16 +213,16 @@ void MainWindow::createHomeLayout() {
     mainLayout->addWidget(scrollArea);
 
 
-    homeWidget->setLayout(mainLayout);
+    m_homeWidget->setLayout(mainLayout);
 
 
 }
 
 void MainWindow::createArtistsLayout() {
 
-    artistsWidget = new QWidget();
+    m_artistsWidget = new QWidget();
 
-    QVBoxLayout *mainLayout = new QVBoxLayout(artistsWidget);
+    QVBoxLayout *mainLayout = new QVBoxLayout(m_artistsWidget);
     mainLayout->setAlignment(Qt::AlignTop);
     mainLayout->setContentsMargins(0,0,0,0);
     mainLayout->setSpacing(0);
@@ -231,24 +231,24 @@ void MainWindow::createArtistsLayout() {
      * ViewBar setup
      */
 
-    QWidget *viewBar = new QWidget(artistsWidget);
+    QWidget *viewBar = new QWidget(m_artistsWidget);
     viewBar->setStyleSheet(".QWidget { background-color: #B4B4B4 }");
     viewBar->setContentsMargins(0,0,0,0);
 
-    QHBoxLayout *viewBarLayout = new QHBoxLayout(artistsWidget);
+    QHBoxLayout *viewBarLayout = new QHBoxLayout(m_artistsWidget);
     viewBarLayout->setAlignment(Qt::AlignTop);
     viewBar->setMaximumHeight(100);
 
 
 
-    QPushButton *customizeButton = new QPushButton("View", artistsWidget);
-    QPushButton *sortButton = new QPushButton("Sort by", artistsWidget);
-    QMenu *customizeMenu = new QMenu(artistsWidget);
-    QMenu *sortMenu = new QMenu(artistsWidget);
-    QAction *newAdditions = new QAction("Album covers", artistsWidget);
-    QAction *sortByArtist = new QAction("Artist", artistsWidget);
-    QAction *sortByAlbum = new QAction("Album", artistsWidget);
-    QAction *sortByYear = new QAction("Year", artistsWidget);
+    QPushButton *customizeButton = new QPushButton("View", m_artistsWidget);
+    QPushButton *sortButton = new QPushButton("Sort by", m_artistsWidget);
+    QMenu *customizeMenu = new QMenu(m_artistsWidget);
+    QMenu *sortMenu = new QMenu(m_artistsWidget);
+    QAction *newAdditions = new QAction("Album covers", m_artistsWidget);
+    QAction *sortByArtist = new QAction("Artist", m_artistsWidget);
+    QAction *sortByAlbum = new QAction("Album", m_artistsWidget);
+    QAction *sortByYear = new QAction("Year", m_artistsWidget);
 
     customizeButton->setMaximumWidth(100);
     customizeButton->setMinimumSize(100, 20);
@@ -279,8 +279,8 @@ void MainWindow::createArtistsLayout() {
      * Content setup
      */
 
-    QWidget *horWidget = new QWidget(artistsWidget);
-    QHBoxLayout *horLayout = new QHBoxLayout(artistsWidget);
+    QWidget *horWidget = new QWidget(m_artistsWidget);
+    QHBoxLayout *horLayout = new QHBoxLayout(m_artistsWidget);
 
     /*
      * Artist Scroll list setup
@@ -306,19 +306,19 @@ void MainWindow::createArtistsLayout() {
      * Grid content setup
      */
 
-    QWidget *gridWidget = new QWidget(artistsWidget);
-    QGridLayout *homeGrid = new QGridLayout(artistsWidget);
+    QWidget *gridWidget = new QWidget(m_artistsWidget);
+    QGridLayout *homeGrid = new QGridLayout(m_artistsWidget);
 
     /*
      * Album
      */
 
-    AlbumModel *albumWidget = new AlbumModel(artistsWidget);
-    AlbumModel *albumWidget2 = new AlbumModel(artistsWidget);
-    AlbumModel *albumWidget3 = new AlbumModel(artistsWidget);
-    AlbumModel *albumWidget4 = new AlbumModel(artistsWidget);
-    AlbumModel *albumWidget5 = new AlbumModel(artistsWidget);
-    AlbumModel *albumWidget6 = new AlbumModel(artistsWidget);
+    AlbumModel *albumWidget = new AlbumModel(m_artistsWidget);
+    AlbumModel *albumWidget2 = new AlbumModel(m_artistsWidget);
+    AlbumModel *albumWidget3 = new AlbumModel(m_artistsWidget);
+    AlbumModel *albumWidget4 = new AlbumModel(m_artistsWidget);
+    AlbumModel *albumWidget5 = new AlbumModel(m_artistsWidget);
+    AlbumModel *albumWidget6 = new AlbumModel(m_artistsWidget);
 
     homeGrid->addWidget(albumWidget,0,0);
     homeGrid->addWidget(albumWidget2,0,1);
@@ -344,15 +344,15 @@ void MainWindow::createArtistsLayout() {
     mainLayout->addWidget(viewBar);
     mainLayout->addWidget(horWidget);
 
-    artistsWidget->setLayout(mainLayout);
+    m_artistsWidget->setLayout(mainLayout);
 
 }
 
 void MainWindow::createAlbumsLayout() {
 
-    albumsWidget = new QWidget();
+    m_albumsWidget = new QWidget();
 
-    QVBoxLayout *mainLayout = new QVBoxLayout(albumsWidget);
+    QVBoxLayout *mainLayout = new QVBoxLayout(m_albumsWidget);
     mainLayout->setAlignment(Qt::AlignTop);
     mainLayout->setContentsMargins(0,0,0,0);
     mainLayout->setSpacing(0);
@@ -362,11 +362,11 @@ void MainWindow::createAlbumsLayout() {
      * ViewBar setup
      */
 
-    QWidget *viewBar = new QWidget(albumsWidget);
+    QWidget *viewBar = new QWidget(m_albumsWidget);
     viewBar->setStyleSheet(".QWidget { background-color: #B4B4B4 }");
     viewBar->setContentsMargins(0,0,0,0);
 
-    QHBoxLayout *viewBarLayout = new QHBoxLayout(albumsWidget);
+    QHBoxLayout *viewBarLayout = new QHBoxLayout(m_albumsWidget);
     viewBarLayout->setAlignment(Qt::AlignTop);
     viewBar->setMaximumHeight(100);
     //viewBarLayout->setMargin(0);
@@ -374,14 +374,14 @@ void MainWindow::createAlbumsLayout() {
 
 
 
-    QPushButton *customizeButton = new QPushButton("View", albumsWidget);
-    QPushButton *sortButton = new QPushButton("Sort by", albumsWidget);
-    QMenu *customizeMenu = new QMenu(albumsWidget);
-    QMenu *sortMenu = new QMenu(albumsWidget);
-    QAction *newAdditions = new QAction("Album covers", albumsWidget);
-    QAction *sortByArtist = new QAction("Artist", albumsWidget);
-    QAction *sortByAlbum = new QAction("Album", albumsWidget);
-    QAction *sortByYear = new QAction("Year", albumsWidget);
+    QPushButton *customizeButton = new QPushButton("View", m_albumsWidget);
+    QPushButton *sortButton = new QPushButton("Sort by", m_albumsWidget);
+    QMenu *customizeMenu = new QMenu(m_albumsWidget);
+    QMenu *sortMenu = new QMenu(m_albumsWidget);
+    QAction *newAdditions = new QAction("Album covers", m_albumsWidget);
+    QAction *sortByArtist = new QAction("Artist", m_albumsWidget);
+    QAction *sortByAlbum = new QAction("Album", m_albumsWidget);
+    QAction *sortByYear = new QAction("Year", m_albumsWidget);
 
     customizeButton->setMaximumWidth(100);
     customizeButton->setMinimumSize(100, 20);
@@ -416,19 +416,19 @@ void MainWindow::createAlbumsLayout() {
      * Grid setup
      */
 
-    QWidget *gridWidget = new QWidget(albumsWidget);
+    QWidget *gridWidget = new QWidget(m_albumsWidget);
     QGridLayout *homeGrid = new QGridLayout();
 
     /*
      * Album
      */
 
-    AlbumModel *albumWidget = new AlbumModel(albumsWidget);
-    AlbumModel *albumWidget2 = new AlbumModel(albumsWidget);
-    AlbumModel *albumWidget3 = new AlbumModel(albumsWidget);
-    AlbumModel *albumWidget4 = new AlbumModel(albumsWidget);
-    AlbumModel *albumWidget5 = new AlbumModel(albumsWidget);
-    AlbumModel *albumWidget6 = new AlbumModel(albumsWidget);
+    AlbumModel *albumWidget = new AlbumModel(m_albumsWidget);
+    AlbumModel *albumWidget2 = new AlbumModel(m_albumsWidget);
+    AlbumModel *albumWidget3 = new AlbumModel(m_albumsWidget);
+    AlbumModel *albumWidget4 = new AlbumModel(m_albumsWidget);
+    AlbumModel *albumWidget5 = new AlbumModel(m_albumsWidget);
+    AlbumModel *albumWidget6 = new AlbumModel(m_albumsWidget);
 
     homeGrid->addWidget(albumWidget,0,0);
     homeGrid->addWidget(albumWidget2,0,1);
@@ -449,16 +449,16 @@ void MainWindow::createAlbumsLayout() {
     mainLayout->addWidget(viewBar);
     mainLayout->addWidget(scrollArea);
 
-    albumsWidget->setLayout(mainLayout);
+    m_albumsWidget->setLayout(mainLayout);
 
 }
 
 void MainWindow::createGenresLayout() {
 
 
-    genresWidget = new QWidget();
+    m_genresWidget = new QWidget();
 
-    QVBoxLayout *mainLayout = new QVBoxLayout(genresWidget);
+    QVBoxLayout *mainLayout = new QVBoxLayout(m_genresWidget);
     mainLayout->setAlignment(Qt::AlignTop);
     mainLayout->setContentsMargins(0,0,0,0);
     mainLayout->setSpacing(0);
@@ -467,24 +467,24 @@ void MainWindow::createGenresLayout() {
      * ViewBar setup
      */
 
-    QWidget *viewBar = new QWidget(genresWidget);
+    QWidget *viewBar = new QWidget(m_genresWidget);
     viewBar->setStyleSheet(".QWidget { background-color: #B4B4B4 }");
     viewBar->setContentsMargins(0,0,0,0);
 
-    QHBoxLayout *viewBarLayout = new QHBoxLayout(genresWidget);
+    QHBoxLayout *viewBarLayout = new QHBoxLayout(m_genresWidget);
     viewBarLayout->setAlignment(Qt::AlignTop);
     viewBar->setMaximumHeight(100);
 
 
 
-    QPushButton *customizeButton = new QPushButton("View", genresWidget);
-    QPushButton *sortButton = new QPushButton("Sort by", genresWidget);
-    QMenu *customizeMenu = new QMenu(genresWidget);
-    QMenu *sortMenu = new QMenu(genresWidget);
-    QAction *newAdditions = new QAction("Album covers", genresWidget);
-    QAction *sortByArtist = new QAction("Artist", genresWidget);
-    QAction *sortByAlbum = new QAction("Album", genresWidget);
-    QAction *sortByYear = new QAction("Year", genresWidget);
+    QPushButton *customizeButton = new QPushButton("View", m_genresWidget);
+    QPushButton *sortButton = new QPushButton("Sort by", m_genresWidget);
+    QMenu *customizeMenu = new QMenu(m_genresWidget);
+    QMenu *sortMenu = new QMenu(m_genresWidget);
+    QAction *newAdditions = new QAction("Album covers", m_genresWidget);
+    QAction *sortByArtist = new QAction("Artist", m_genresWidget);
+    QAction *sortByAlbum = new QAction("Album", m_genresWidget);
+    QAction *sortByYear = new QAction("Year", m_genresWidget);
 
     customizeButton->setMaximumWidth(100);
     customizeButton->setMinimumSize(100, 20);
@@ -515,8 +515,8 @@ void MainWindow::createGenresLayout() {
      * Content setup
      */
 
-    QWidget *horWidget = new QWidget(genresWidget);
-    QHBoxLayout *horLayout = new QHBoxLayout(genresWidget);
+    QWidget *horWidget = new QWidget(m_genresWidget);
+    QHBoxLayout *horLayout = new QHBoxLayout(m_genresWidget);
 
     /*
      * Artist Scroll list setup
@@ -542,19 +542,19 @@ void MainWindow::createGenresLayout() {
      * Grid content setup
      */
 
-    QWidget *gridWidget = new QWidget(genresWidget);
-    QGridLayout *homeGrid = new QGridLayout(genresWidget);
+    QWidget *gridWidget = new QWidget(m_genresWidget);
+    QGridLayout *homeGrid = new QGridLayout(m_genresWidget);
 
     /*
      * Album
      */
 
-    AlbumModel *albumWidget = new AlbumModel(genresWidget);
-    AlbumModel *albumWidget2 = new AlbumModel(genresWidget);
-    AlbumModel *albumWidget3 = new AlbumModel(genresWidget);
-    AlbumModel *albumWidget4 = new AlbumModel(genresWidget);
-    AlbumModel *albumWidget5 = new AlbumModel(genresWidget);
-    AlbumModel *albumWidget6 = new AlbumModel(genresWidget);
+    AlbumModel *albumWidget = new AlbumModel(m_genresWidget);
+    AlbumModel *albumWidget2 = new AlbumModel(m_genresWidget);
+    AlbumModel *albumWidget3 = new AlbumModel(m_genresWidget);
+    AlbumModel *albumWidget4 = new AlbumModel(m_genresWidget);
+    AlbumModel *albumWidget5 = new AlbumModel(m_genresWidget);
+    AlbumModel *albumWidget6 = new AlbumModel(m_genresWidget);
 
     homeGrid->addWidget(albumWidget,0,0);
     homeGrid->addWidget(albumWidget2,0,1);
@@ -580,7 +580,7 @@ void MainWindow::createGenresLayout() {
     mainLayout->addWidget(viewBar);
     mainLayout->addWidget(horWidget);
 
-    genresWidget->setLayout(mainLayout);
+    m_genresWidget->setLayout(mainLayout);
 
 }
 
@@ -592,25 +592,25 @@ void MainWindow::createGenresLayout() {
 
 void MainWindow::onHomeActionClick() {
 
-    viewStack->setCurrentWidget(homeWidget);
+    m_viewStack->setCurrentWidget(m_homeWidget);
 
 }
 
 void MainWindow::onArtistsActionClick() {
 
-    viewStack->setCurrentWidget(artistsWidget);
+    m_viewStack->setCurrentWidget(m_artistsWidget);
 
 }
 
 void MainWindow::onAlbumsActionClick() {
 
-    viewStack->setCurrentWidget(albumsWidget);
+    m_viewStack->setCurrentWidget(m_albumsWidget);
 
 }
 
 void MainWindow::onGenresActionClick() {
 
-    viewStack->setCurrentWidget(genresWidget);
+    m_viewStack->setCurrentWidget(m_genresWidget);
 
 }
 

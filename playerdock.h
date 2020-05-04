@@ -13,22 +13,22 @@ class PlayerDock : public QDockWidget
 {
     Q_OBJECT
 private:
-    QDockWidget *player;
-    QPixmap *albumImage;
-    QPushButton *playButton;
-    QPushButton *nextButton;
-    QPushButton *previousButton;
-    QPushButton *shuffleButton;
-    QPushButton *repeatButton;
-    QSlider *volumeSlider;
-    QListWidget *trackListWidget;
-    QLabel *volumePercent;
-    QLabel *trackLabel;
-    QLabel *artistLabel;
-    QLabel *albumLabel;
-    QLabel *albumArtistLabel;
-    QLabel *yearLabel;
-    QLabel *genreLabel;
+    QDockWidget *m_player;
+    QPixmap *m_albumImage;
+    QPushButton *m_playButton;
+    QPushButton *m_nextButton;
+    QPushButton *m_previousButton;
+    QPushButton *m_shuffleButton;
+    QPushButton *m_repeatButton;
+    QSlider *m_volumeSlider;
+    QListWidget *m_trackListWidget;
+    QLabel *m_volumePercent;
+    QLabel *m_trackLabel;
+    QLabel *m_artistLabel;
+    QLabel *m_albumLabel;
+    QLabel *m_albumArtistLabel;
+    QLabel *m_yearLabel;
+    QLabel *m_genreLabel;
 public:
     explicit PlayerDock(QWidget *parent = nullptr);
     void createLayout();

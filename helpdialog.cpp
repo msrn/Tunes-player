@@ -12,7 +12,7 @@ HelpDialog::HelpDialog(QWidget *parent) : QDialog(parent) {
     this->setFixedSize(400,400);
 
     //Viewstack controls the content view
-    viewStack = new QStackedWidget();
+    m_viewStack = new QStackedWidget();
     createLayout();
     createWelcome();
     createHowTo();
@@ -22,14 +22,14 @@ HelpDialog::HelpDialog(QWidget *parent) : QDialog(parent) {
     createGenre();
 
 
-    viewStack->addWidget(welcomeWidget);
-    viewStack->addWidget(howToWidget);
-    viewStack->addWidget(mainViewWidget);
-    viewStack->addWidget(artistViewWidget);
-    viewStack->addWidget(albumViewWidget);
-    viewStack->addWidget(genreViewWidget);
+    m_viewStack->addWidget(m_welcomeWidget);
+    m_viewStack->addWidget(m_howToWidget);
+    m_viewStack->addWidget(m_mainViewWidget);
+    m_viewStack->addWidget(m_artistViewWidget);
+    m_viewStack->addWidget(m_albumViewWidget);
+    m_viewStack->addWidget(m_genreViewWidget);
 
-    connect(helpList, SIGNAL(itemClicked(QListWidgetItem *)), this, SLOT(onItemClick(QListWidgetItem*)));
+    connect(m_helpList, SIGNAL(itemClicked(QListWidgetItem *)), this, SLOT(onItemClick(QListWidgetItem*)));
 
 }
 
@@ -42,29 +42,29 @@ void HelpDialog::createLayout() {
     QLabel *helpIndexLabel = new QLabel("Help Index");
     helpIndexLabel->setStyleSheet("font-size: 30px;");
 
-    helpList = new QListWidget(this);
-    welcomeItem = new QListWidgetItem("Welcome", helpList);
-    howToItem = new QListWidgetItem("How to use", helpList);
-    mainViewItem = new QListWidgetItem("Home view", helpList);
-    artistViewItem = new QListWidgetItem("Artist view", helpList);
-    albumViewItem = new QListWidgetItem("Album view", helpList);
-    genreViewItem = new QListWidgetItem("Genre view", helpList);
+    m_helpList = new QListWidget(this);
+    m_welcomeItem = new QListWidgetItem("Welcome", m_helpList);
+    m_howToItem = new QListWidgetItem("How to use", m_helpList);
+    m_mainViewItem = new QListWidgetItem("Home view", m_helpList);
+    m_artistViewItem = new QListWidgetItem("Artist view", m_helpList);
+    m_albumViewItem = new QListWidgetItem("Album view", m_helpList);
+    m_genreViewItem = new QListWidgetItem("Genre view", m_helpList);
 
-    helpList->addItem(welcomeItem);
-    helpList->addItem(howToItem);
-    helpList->addItem(mainViewItem);
-    helpList->addItem(artistViewItem);
-    helpList->addItem(albumViewItem);
-    helpList->addItem(genreViewItem);
+    m_helpList->addItem(m_welcomeItem);
+    m_helpList->addItem(m_howToItem);
+    m_helpList->addItem(m_mainViewItem);
+    m_helpList->addItem(m_artistViewItem);
+    m_helpList->addItem(m_albumViewItem);
+    m_helpList->addItem(m_genreViewItem);
 
     helpIndexLayout->addWidget(helpIndexLabel);
-    helpIndexLayout->addWidget(helpList);
+    helpIndexLayout->addWidget(m_helpList);
     helpIndex->setLayout(helpIndexLayout);
 
     QVBoxLayout *contentLayout = new QVBoxLayout(this);
     QWidget *contentWidget = new QWidget(this);
 
-    contentLayout->addWidget(viewStack);
+    contentLayout->addWidget(m_viewStack);
     contentWidget->setLayout(contentLayout);
 
 
@@ -77,7 +77,7 @@ void HelpDialog::createLayout() {
 
 void HelpDialog::createWelcome() {
 
-    welcomeWidget = new QWidget(this);
+    m_welcomeWidget = new QWidget(this);
 
     QVBoxLayout *vBox = new QVBoxLayout(this);
 
@@ -94,13 +94,13 @@ void HelpDialog::createWelcome() {
 
     vBox->addWidget(title);
     vBox->addWidget(content);
-    welcomeWidget->setLayout(vBox);
+    m_welcomeWidget->setLayout(vBox);
 
 }
 
 void HelpDialog::createHowTo()
 {
-    howToWidget = new QWidget();
+    m_howToWidget = new QWidget();
 
     QVBoxLayout *vBox = new QVBoxLayout(this);
 
@@ -124,12 +124,12 @@ void HelpDialog::createHowTo()
 
     vBox->addWidget(title);
     vBox->addWidget(content);
-    howToWidget->setLayout(vBox);
+    m_howToWidget->setLayout(vBox);
 }
 
 void HelpDialog::createMain()
 {
-    mainViewWidget = new QWidget();
+    m_mainViewWidget = new QWidget();
 
     QVBoxLayout *vBox = new QVBoxLayout(this);
 
@@ -144,12 +144,12 @@ void HelpDialog::createMain()
 
     vBox->addWidget(title);
     vBox->addWidget(content);
-    mainViewWidget->setLayout(vBox);
+    m_mainViewWidget->setLayout(vBox);
 }
 
 void HelpDialog::createArtist()
 {
-    artistViewWidget = new QWidget();
+    m_artistViewWidget = new QWidget();
 
     QVBoxLayout *vBox = new QVBoxLayout(this);
 
@@ -164,12 +164,12 @@ void HelpDialog::createArtist()
 
     vBox->addWidget(title);
     vBox->addWidget(content);
-    artistViewWidget->setLayout(vBox);
+    m_artistViewWidget->setLayout(vBox);
 }
 
 void HelpDialog::createAlbum()
 {
-    albumViewWidget = new QWidget();
+    m_albumViewWidget = new QWidget();
 
     QVBoxLayout *vBox = new QVBoxLayout(this);
 
@@ -185,12 +185,12 @@ void HelpDialog::createAlbum()
 
     vBox->addWidget(title);
     vBox->addWidget(content);
-    albumViewWidget->setLayout(vBox);
+    m_albumViewWidget->setLayout(vBox);
 }
 
 void HelpDialog::createGenre()
 {
-    genreViewWidget = new QWidget();
+    m_genreViewWidget = new QWidget();
 
     QVBoxLayout *vBox = new QVBoxLayout(this);
 
@@ -206,28 +206,28 @@ void HelpDialog::createGenre()
 
     vBox->addWidget(title);
     vBox->addWidget(content);
-    genreViewWidget->setLayout(vBox);
+    m_genreViewWidget->setLayout(vBox);
 }
 
 
 
 void HelpDialog::onItemClick(QListWidgetItem * item)
 {
-    if (item == welcomeItem)
-        viewStack->setCurrentWidget(welcomeWidget);
+    if (item == m_welcomeItem)
+        m_viewStack->setCurrentWidget(m_welcomeWidget);
 
-    if (item == howToItem)
-        viewStack->setCurrentWidget(howToWidget);
+    if (item == m_howToItem)
+        m_viewStack->setCurrentWidget(m_howToWidget);
 
-    if (item == mainViewItem)
-        viewStack->setCurrentWidget(mainViewWidget);
+    if (item == m_mainViewItem)
+        m_viewStack->setCurrentWidget(m_mainViewWidget);
 
-    if (item == artistViewItem)
-        viewStack->setCurrentWidget(artistViewWidget);
+    if (item == m_artistViewItem)
+        m_viewStack->setCurrentWidget(m_artistViewWidget);
 
-    if (item == albumViewItem)
-        viewStack->setCurrentWidget(albumViewWidget);
+    if (item == m_albumViewItem)
+        m_viewStack->setCurrentWidget(m_albumViewWidget);
 
-    if (item == genreViewItem)
-        viewStack->setCurrentWidget(genreViewWidget);
+    if (item == m_genreViewItem)
+        m_viewStack->setCurrentWidget(m_genreViewWidget);
 }

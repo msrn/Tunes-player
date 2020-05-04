@@ -19,20 +19,20 @@ public:
     void createGenre();
 
 private:
-    QWidget *welcomeWidget;
-    QWidget *howToWidget;
-    QWidget *mainViewWidget;
-    QWidget *albumViewWidget;
-    QWidget *artistViewWidget;
-    QWidget *genreViewWidget;
-    QListWidgetItem *welcomeItem;
-    QListWidgetItem *howToItem;
-    QListWidgetItem *mainViewItem;
-    QListWidgetItem *albumViewItem;
-    QListWidgetItem *artistViewItem;
-    QListWidgetItem *genreViewItem;
-    QListWidget *helpList;
-    QStackedWidget *viewStack;
+    QWidget *m_welcomeWidget;
+    QWidget *m_howToWidget;
+    QWidget *m_mainViewWidget;
+    QWidget *m_albumViewWidget;
+    QWidget *m_artistViewWidget;
+    QWidget *m_genreViewWidget;
+    QListWidgetItem *m_welcomeItem;
+    QListWidgetItem *m_howToItem;
+    QListWidgetItem *m_mainViewItem;
+    QListWidgetItem *m_albumViewItem;
+    QListWidgetItem *m_artistViewItem;
+    QListWidgetItem *m_genreViewItem;
+    QListWidget *m_helpList;
+    QStackedWidget *m_viewStack;
 signals:
 
 private slots:

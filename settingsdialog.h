@@ -12,10 +12,10 @@ public:
     explicit SettingsDialog(QWidget *parent = nullptr);
     void createLayout();
 private:
-    QGroupBox *fileSettingsGroup;
-    QGroupBox *audioSettingsGroup;
-    QDialogButtonBox *buttonBox;
-    QPushButton *addFolder;
+    QGroupBox *m_fileSettingsGroup;
+    QGroupBox *m_audioSettingsGroup;
+    QDialogButtonBox *m_buttonBox;
+    QPushButton *m_addFolder;
 signals:
 
 private slots:
