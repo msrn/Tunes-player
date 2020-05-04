@@ -1,0 +1,17 @@
+<RCC>
+    <qresource prefix="/">
+        <file>res/home.svg</file>
+        <file>res/artist.svg</file>
+        <file>res/album.svg</file>
+        <file>res/genre.svg</file>
+        <file>res/help.svg</file>
+        <file>res/settings.svg</file>
+        <file>res/empty_album.png</file>
+        <file>res/next.svg</file>
+        <file>res/pause.svg</file>
+        <file>res/play.svg</file>
+        <file>res/previous.svg</file>
+        <file>res/repeat.svg</file>
+        <file>res/shuffle.svg</file>
+    </qresource>
+</RCC>
